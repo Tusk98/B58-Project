@@ -1,6 +1,6 @@
-// Space Invaders by 
-//WU, Yu Heng		1003475330 	wuyu35	
-//LEE, Patricia
+// Space Invaders 
+// WU, Yu Heng		1003475330 	wuyu35	
+// LEE, Patricia
 
 
 `include "vga_adapter/vga_adapter.v"
@@ -8,7 +8,7 @@
 `include "vga_adapter/vga_controller.v"
 `include "vga_adapter/vga_pll.v"
 
-module part2
+module space_invaders
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
@@ -18,7 +18,7 @@ module part2
 		VGA_CLK,   						//	VGA Clock
 		VGA_HS,							//	VGA H_SYNC
 		VGA_VS,							//	VGA V_SYNC
-		VGA_BLANK_N,						//	VGA BLANK
+		VGA_BLANK_N,					//	VGA BLANK
 		VGA_SYNC_N,						//	VGA SYNC
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
@@ -86,9 +86,22 @@ module part2
 	  wire load_value = KEY[3];
 	  
 	  // give color value from SW into wire
+	  localparam red   = 3'b100,
+				 green = 3'b010;
+				 
 	  assign colour = SW[9:7];
 	  
+	  
 	  wire load_x, load_y, load_draw; 
+	  wire clock_pulse; 
+	  wire bullet_onscreen, alien_hit, game_over;
+	 
+	// This is my own clock for the project with 60Hz from clock_timer.v
+	clock_timer game_clock(
+		.reset_n(resetn), 
+		.clock(CLOCK_50), 
+		.pulse(clock_pulse)
+		);
 
       // datapath d0(...);
     datapath d0(
@@ -105,19 +118,28 @@ module part2
         );
 
     // Instansiate FSM control
-    // control c0(...);
-    control c0(
-        .clk(CLOCK_50),
-        .reset_n(resetn),
-        .get_input(get_input),
-        .drawing(writeEn),
-        .load_x(load_x),
-        .load_y(load_y),
-        .load_draw(load_draw),
-        .start_drawing(start_drawing),
-        .resetting(resetting)
-        );
+    // control c0(...);	
+	control c0(
+		.clk(CLOCK_50),
+		.reset_n(resetn),
+		.start_game(KEY[1]),
+		.move_player(SW[0]),
+		.bullet_onscreen(bullet_onscreen),
+		.alien_hit(alien_hit),
+		.game_over(game_over),
+		.drawing(writeEn)
+		);
     
+endmodule
+
+
+module datapath();
+	input clk; 
+	input reset_n;
+	input [6:0] data_x, data_y;
+	
+	output 
+
 endmodule
 
 
@@ -129,7 +151,9 @@ module control(
 				move_player,
 				bullet_onscreen,
 				bullet_end,
-				hit_alien
+				alien_hit,
+				game_over,
+				bullet_x 
 				);
 				
 	input clk;
@@ -145,7 +169,9 @@ module control(
 	input bullet_end; 
 	input alien_hit;
 	input game_over;
+
 	
+	// Example output for X value of bullet (?)
 	output reg bullet_x;
 	
 	reg[5:0] current_state, next_state;
