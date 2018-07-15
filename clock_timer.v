@@ -1,3 +1,4 @@
+// File for taking Clock_50 and converting from 50'000'000 Hz to 60 Hz
 module clock_timer(reset_n, clock, pulse);
 	input reset_n;
 	input clock; 
