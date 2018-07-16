@@ -23,7 +23,7 @@ module space_invaders
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
 		VGA_B,   						//	VGA Blue[9:0]
-		LEDR
+		HEX0
 	);
 
 	input			CLOCK_50;				//	50 MHz
@@ -41,8 +41,12 @@ module space_invaders
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	
+	output  [6:0]   HEX0;
+	
 	wire resetn;
 	assign resetn = KEY[0];
+	
+	wire [6:0] fsmCheckOutput;
 	
 	// Create the colour, x, y and writeEn wires that are inputs to the controller.
 	wire [2:0] colour;
@@ -88,8 +92,7 @@ module space_invaders
 	  
 	  // give color value from SW into wire
 	  localparam red   = 3'b100,
-				 green = 3'b010,
-				 x_interval = 15'b0000_0000_1000_0000
+				 green = 3'b010;
 				 
 	  assign colour = SW[9:7];
 	  
@@ -105,31 +108,23 @@ module space_invaders
 		.pulse(clock_pulse)
 		);
 
-      // datapath d0(...);
-    datapath d0(
-        .clk(CLOCK_50),
-        .reset_n(resetn),
-        .data_in(coordinate_input),
-        .load_x(load_x),
-        .load_y(load_y),
-        .load_draw(load_draw),
-        .x(x),
-        .y(y),
-        .drawing(writeEn),
-        .resetting(resetting)
-        );
-
+	hex hexCheck(
+		.out(HEX0[6:0]),
+		.in(fsmCheckOutput)
+		);
+		
     // Instansiate FSM control
     // control c0(...);	
 	control c0(
-		.clk(CLOCK_50),
-		.reset_n(resetn),
+		.clk(clock_pulse),
+		.reset_n(SW[1]),
 		.start_game(KEY[1]),
 		.move_player(SW[0]),
-		.bullet_onscreen(bullet_onscreen),
-		.alien_hit(alien_hit),
-		.game_over(game_over),
-		.drawing(writeEn),
+		.bullet_onscreen(SW[3]),
+		.alien_hit(SW[4]),
+		.game_over(SW[5]),
+		.drawing(SW[6]),
+		.FSMCheck(fsmCheckOutput)
 		);
     
 endmodule
@@ -172,6 +167,8 @@ module control(
 	input bullet_end; 
 	input alien_hit;
 	input game_over;
+	output [3:0] FSMCheck;
+
 	
 	// Example output for X value of bullet (?)
 	output reg bullet_x;
