@@ -56,6 +56,13 @@ HEX0[3] <= hex_display:h0.hex
 HEX0[4] <= hex_display:h0.hex
 HEX0[5] <= hex_display:h0.hex
 HEX0[6] <= hex_display:h0.hex
+HEX4[0] <= hex_display:h4.hex
+HEX4[1] <= hex_display:h4.hex
+HEX4[2] <= hex_display:h4.hex
+HEX4[3] <= hex_display:h4.hex
+HEX4[4] <= hex_display:h4.hex
+HEX4[5] <= hex_display:h4.hex
+HEX4[6] <= hex_display:h4.hex
 
 
 |space_invaders|vga_adapter:VGA
@@ -856,6 +863,57 @@ hex[5] <= hex.DB_MAX_OUTPUT_PORT_TYPE
 hex[6] <= hex.DB_MAX_OUTPUT_PORT_TYPE
 
 
+|space_invaders|hex_display:h4
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN0
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[0] => hex.IN1
+c[1] => hex.IN0
+c[1] => hex.IN1
+c[1] => hex.IN1
+c[1] => hex.IN0
+c[1] => hex.IN1
+c[1] => hex.IN0
+c[1] => hex.IN1
+c[1] => hex.IN1
+c[1] => hex.IN1
+c[1] => hex.IN1
+c[1] => hex.IN0
+c[2] => hex.IN1
+c[2] => hex.IN0
+c[2] => hex.IN0
+c[2] => hex.IN0
+c[2] => hex.IN1
+c[2] => hex.IN0
+c[3] => hex.IN1
+c[3] => hex.IN1
+c[3] => hex.IN1
+c[3] => hex.IN1
+c[3] => hex.IN1
+c[3] => hex.IN1
+c[3] => hex.IN1
+hex[0] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[1] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[2] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[3] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[4] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[5] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+hex[6] <= hex.DB_MAX_OUTPUT_PORT_TYPE
+
+
 |space_invaders|clock_timer:ck
 reset_n => counter.OUTPUTSELECT
 reset_n => counter.OUTPUTSELECT
@@ -945,6 +1003,10 @@ pulse <= Equal0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |space_invaders|control:c0
+clk => score[0]~reg0.CLK
+clk => score[1]~reg0.CLK
+clk => score[2]~reg0.CLK
+clk => score[3]~reg0.CLK
 clk => fsm_num[0]~reg0.CLK
 clk => fsm_num[1]~reg0.CLK
 clk => fsm_num[2]~reg0.CLK
@@ -987,6 +1049,10 @@ bullet_onscreen => Selector5.IN5
 bullet_onscreen => Selector4.IN1
 bullet_end => Selector12.IN3
 bullet_end => Selector3.IN2
+alien_hit => score.OUTPUTSELECT
+alien_hit => score.OUTPUTSELECT
+alien_hit => score.OUTPUTSELECT
+alien_hit => score.OUTPUTSELECT
 alien_hit => Selector11.IN3
 alien_hit => Selector3.IN3
 game_over => Selector13.IN3
@@ -995,5 +1061,9 @@ fsm_num[0] <= fsm_num[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 fsm_num[1] <= fsm_num[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 fsm_num[2] <= fsm_num[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 fsm_num[3] <= fsm_num[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+score[0] <= score[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+score[1] <= score[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+score[2] <= score[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+score[3] <= score[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 

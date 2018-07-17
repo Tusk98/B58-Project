@@ -20,7 +20,8 @@ module space_invaders
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
 		VGA_B,   						//	VGA Blue[9:0]
-		HEX0
+		HEX0,
+		HEX4
 	);
 
 	input			CLOCK_50;				//	50 MHz
@@ -38,6 +39,7 @@ module space_invaders
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	output   [6:0] HEX0;
+	output   [6:0] HEX4;
 	
 	wire resetn;
 	assign resetn = KEY[0];
@@ -90,11 +92,17 @@ module space_invaders
 	  wire load_x, load_y, load_draw; 
 	  
 	  wire [3:0] fsm_hex_output;
+	  wire [3:0] score;
 	  wire clk_pulse;
 	 
 	hex_display h0(
 		.c(fsm_hex_output[3:0]),
 		.hex(HEX0)
+		);
+		
+	hex_display h4(
+		.c(score[3:0]),
+		.hex(HEX4)
 		);
 	 
 	 clock_timer ck(
@@ -115,7 +123,8 @@ module space_invaders
 		  .bullet_end(SW[4]),
 		  .alien_hit(SW[5]),
 		  .game_over(SW[6]),
-		  .fsm_num(fsm_hex_output)
+		  .fsm_num(fsm_hex_output),
+		  .score(score)
         );
     
 endmodule
@@ -131,7 +140,8 @@ module control(
 				bullet_end,
 				alien_hit,
 				game_over,
-				fsm_num
+				fsm_num,
+				score
 				);
 				
 	input clk;
@@ -149,6 +159,7 @@ module control(
 	input game_over;
 	
 	output reg [3:0] fsm_num;
+	output reg [3:0] score = 4'b0;
 	
 	reg[5:0] current_state, next_state;
 	
@@ -169,6 +180,8 @@ module control(
 				
 	/* For the drawing variable, I'm planning to hijack Jeff's idea of 
 		if drawing = 1, then stay in that state */
+		
+	//localparam score_keep = 4'b0;
 		
 	always@(posedge clk)
 	begin: state_table
@@ -222,6 +235,7 @@ module control(
 		But here's an example with bullet_y, where maybe I can just
 		add "bullet_x" to the square coordinates for the bullet 
 	*/
+	
 	always @(posedge clk)
 	begin: enable_signals
 		fsm_num = 4'b0;
@@ -272,6 +286,8 @@ module control(
 			
 			REMOVE_BULLET: begin
 				fsm_num = 4'b1011;
+				if (alien_hit == 1'b1)
+					score = score + 1;
 			end
 			
 			REMOVE_ALIEN: begin
@@ -293,6 +309,7 @@ module control(
         else
             current_state <= next_state;
     end // state_FFS
+	 
 
 endmodule 
 
