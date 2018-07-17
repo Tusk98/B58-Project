@@ -1,0 +1,11 @@
+Phase 1:
+Ensure that the FSM is correct through using the HEX displays. Ensure the scoring works
+
+
+Phase 2:
+Create the starting screen for the game, make the animation for the player and bullet.
+
+Phase 3:
+Make aliens dissapear from getting shot (Erasing, Collision detection, what happens when it doesn't hit an alien)
+
+
