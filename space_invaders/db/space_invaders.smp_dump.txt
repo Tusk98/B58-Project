@@ -1,0 +1,34 @@
+
+State Machine - |space_invaders|control:c0|current_state
+Name current_state.END_GAME current_state.REMOVE_BULLET current_state.REMOVE_ALIEN current_state.CHECK_HIT current_state.MOVE_BULLET current_state.DRAW_MOVE_RIGHT current_state.MOVE_CHAR_RIGHT current_state.DRAW_MOVE_LEFT current_state.MOVE_CHAR_LEFT current_state.DRAW_BULLET current_state.SHOOT current_state.WAIT_BEGIN_GAME current_state.DRAW_PLAYER_ALIENS current_state.WAIT_DRAW 
+current_state.WAIT_DRAW 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+current_state.DRAW_PLAYER_ALIENS 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+current_state.WAIT_BEGIN_GAME 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+current_state.SHOOT 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+current_state.DRAW_BULLET 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+current_state.MOVE_CHAR_LEFT 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+current_state.DRAW_MOVE_LEFT 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+current_state.MOVE_CHAR_RIGHT 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+current_state.DRAW_MOVE_RIGHT 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+current_state.MOVE_BULLET 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+current_state.CHECK_HIT 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+current_state.REMOVE_ALIEN 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+current_state.REMOVE_BULLET 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.END_GAME 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |space_invaders|control:c0|next_state
+Name next_state.END_GAME next_state.REMOVE_BULLET next_state.REMOVE_ALIEN next_state.CHECK_HIT next_state.MOVE_BULLET next_state.DRAW_MOVE_RIGHT next_state.MOVE_CHAR_RIGHT next_state.DRAW_MOVE_LEFT next_state.MOVE_CHAR_LEFT next_state.DRAW_BULLET next_state.SHOOT next_state.WAIT_BEGIN_GAME next_state.DRAW_PLAYER_ALIENS next_state.WAIT_DRAW 
+next_state.WAIT_DRAW 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+next_state.DRAW_PLAYER_ALIENS 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+next_state.WAIT_BEGIN_GAME 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+next_state.SHOOT 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+next_state.DRAW_BULLET 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+next_state.MOVE_CHAR_LEFT 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+next_state.DRAW_MOVE_LEFT 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+next_state.MOVE_CHAR_RIGHT 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+next_state.DRAW_MOVE_RIGHT 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+next_state.MOVE_BULLET 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+next_state.CHECK_HIT 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+next_state.REMOVE_ALIEN 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+next_state.REMOVE_BULLET 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.END_GAME 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
