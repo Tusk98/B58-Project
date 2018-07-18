@@ -175,6 +175,7 @@ module control(
 	
 	// Example output for X value of bullet (?)
 	output reg bullet_x;
+	output reg FSMCheck;
 	
 	reg[5:0] current_state, next_state;
 	
