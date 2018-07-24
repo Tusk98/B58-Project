@@ -37,7 +37,8 @@ module space_invaders
 		VGA_G,	 						//	VGA Green[9:0]
 		VGA_B,   						//	VGA Blue[9:0]
 		HEX0,
-		HEX4
+		HEX4,
+		LEDR
 	);
 
 	input			CLOCK_50;				//	50 MHz
@@ -56,6 +57,8 @@ module space_invaders
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	output   [6:0] HEX0;
 	output   [6:0] HEX4;
+	output   [3:0] LEDR;
+
 	
 	wire resetn;
 	assign resetn = KEY[0];
@@ -92,17 +95,6 @@ module space_invaders
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-  
-	  // Since SW[6:0] is used for input (X,Y)
-	  wire [6:0]coordinate_input;
-	  // Press KEY[1] to start drawing as per instructions in paragraph 
-	  wire start_drawing = KEY[1];
-	  // Pass SW value into coordinate input wire
-	  assign coordinate_input = SW[6:0]; 
-	  // Load register with X value 
-	  wire load_value = KEY[3];
-	  
-	  wire load_x, load_y, load_draw; 
 	  
 	  wire [3:0] fsm_hex_output;
 	  wire [3:0] score;
@@ -111,10 +103,26 @@ module space_invaders
 		wire bullet_end;
 		wire alien_hit;
 	  wire game_over;
+	  assign LEDR[0] = writeEn; 
 
+	 	hex_display h0(
+		.c(fsm_hex_output[3:0]),
+		.hex(HEX0)
+		);
+		
+	hex_display h4(
+		.c(score[3:0]),
+		.hex(HEX4)
+		);
+		
+		clock_timer ck(
+			.reset_n(resetn),
+			.clock(CLOCK_50),
+			.pulse(clk_pulse)
+		);
 	 
     datapath d0(
-      .clk(clk_pulse),
+      .clk(CLOCK_50),
       .reset_n(SW[9]),
       .x(x),
       .y(y),
@@ -173,6 +181,8 @@ module datapath(
   output reg bullet_end = 1'b0;
   output reg alien_hit = 1'b0;
   output reg game_over = 1'b0;
+  reg resetting; 
+  
   
   // Aliens have y range of 0 to 60
   
@@ -187,6 +197,7 @@ module datapath(
    reg [7:0] x_bullet; 
 	reg [6:0] y_interval = 4'b0000;
     
+
    localparam 	x_interval = 4'b0000,
   								x_player_start = 6'b111100,
     							y_player_start = 6'b100101,
@@ -202,11 +213,15 @@ module datapath(
     if (!reset_n) begin
 			drawing <= 1'b1; 
 			reset_counter <= 15'b0;
-      colour <= 3'b000;
+			colour <= 3'b000;
+			resetting <= 1;
     end 
+	 else begin
+		resetting <= 0;
+	end 
     
     //For redrawing the whole board in when resetting 
-    if (!reset_n) begin
+    if (resetting) begin
       drawing <= 1'b1;
 				x <= reset_counter[7:0]; 
 				y <= reset_counter[14:8];
@@ -235,26 +250,34 @@ module datapath(
     
     // DRAW_PLAYER_ALIEN 
     if (fsm_num == 4'b0001) begin
-      // Set drawing variable to 1
-      drawing <= 1'b1;
+		drawing <= 1'b1;
       // X is constant for aliens at 5
-      x <= x_alien;
+      x <= {1'b0, x_alien};
       y <= y_interval; //y_interval = 4'b0000 defined above
       colour <= 3'b100; // aliens are red
+		// Set drawing variable to 1
       
       // If statement for when you're finished drawing the aliens
       // Draw the player now
-      if (y_interval == 111100 && x == 4'b0101) begin
+      if (y != y_player_start) begin
+		  drawing <= 1'b1;
         x <= x_player_start;
         y <= y_player_start;
         colour <= 3'b001; // player is blue
+		  //drawing <= 1'b0;
       end 
+		
+		
+		
       // Finish drawing
-      else begin 
-        drawing <= 1'b0;
-      end 
+      
+		
       // Increment y_interval by 15 
       y_interval <= y_interval + 4'b1111;
+		
+		if (y_interval >= 6'b111111) begin
+			drawing <= 1'b0;
+		end
     end // end of if for DRAW_PLAYER_ALIEN
     
     
@@ -265,20 +288,21 @@ module datapath(
       colour <= 3'b111;
       
       // Create the white bullet right on top of the player
-      y <= y_player - 4'b1111; 
-      x <= x - 4'b1111;
+      y <= y_player_start - 4'b1111; 
+      x <= x_player_start - 4'b1111;
       
       // Store values in wire
       y_bullet = y; 
       x_bullet = x;
       
       // Return x and y values back to player values for movement
-      if (x != x_player_start) begin 
+      /*if (x != x_player) begin 
         x <= x_player;
         y <= y_player;
-        drawing <= 0;
+        drawing <= 1'b0;
         colour <= 3'b001;
-      end
+      end*/
+		drawing <= 1'b0;
     end
     
     // DRAW_MOVE_LEFT
@@ -327,6 +351,7 @@ module datapath(
       end 
     end
     
+	 
     // MOVE_BULLET
     if (fsm_num == 4'b1001) begin
       // Draw the current bullet square into black
@@ -334,7 +359,6 @@ module datapath(
       y <= y_bullet; 
       colour <= 3'b000;
       drawing <= 1'b1; 
-
       // Draw the new bullet 
       if (colour == 3'b000) begin 
         drawing <= 1'b0;
@@ -547,10 +571,51 @@ module control(
 endmodule 
 	
 	
+// hex display
+module hex_display(c, hex);
+	input [3:0] c;
+	output [6:0] hex;
+
+	assign hex[0] = ((~c[3] & ~c[2] & ~c[1] & c[0]) | (~c[3] & c[2] & ~c[1] & ~c[0]) | (c[3] & c[2] & ~c[1] & c[0]) | (c[3] & ~c[2] & c[1] & c[0]));
+
+	assign hex[1] = ((~c[3] & c[2] & ~c[1] & c[0]) | (c[3] & c[2] & ~c[0]) | (c[3] & c[1] & c[0]) | (c[2] & c[1] & ~c[0]));
+
+	assign hex[2] = ((~c[3] & ~c[2] & c[1] & ~c[0]) | (c[3] & c[2] & ~c[0]) | (c[3] & c[2] & c[1]));
+
+	assign hex[3] = ((~c[3] & ~c[2] & ~c[1] & c[0]) | (~c[3] & c[2] & ~c[1] & ~c[0]) | (c[3] & ~c[2] & c[1] & ~c[0]) | (c[2] & c[1] & c[0]));
+
+	assign hex[4] = ((~c[2] & ~c[1] & c[0]) | (~c[3] & c[0]) | (~c[3] & c[2] & ~c[1]));
+
+	assign hex[5] = ((c[3] & c[2] & ~c[1] & c[0]) | (~c[3] & ~c[2] & c[0]) | (~c[3] & ~c[2] & c[1]) | (~c[3] & c[1] & c[0]));
+
+	assign hex[6] = ((~c[3] & ~c[2] & ~c[1]) | (c[3] & c[2] & ~c[1] & ~c[0]) | (~c[3] & c[2] & c[1] & c[0]));
+endmodule
 	
+// File for taking Clock_50 and converting from 50'000'000 Hz to 60 Hz
+module clock_timer(reset_n, clock, pulse);
+	input reset_n;
+	input clock; 
 	
+	reg [27:0] counter;
+	output pulse;
 	
+	// 4'166'667 in Decimal, will turn Clock_50 into 12 Hz 
+	localparam limit = 28'b0010111110101111000010000000;
 	
+	always @(posedge clock)
+	begin
+		if (reset_n == 1'b0)
+			counter <= 0;
+		else if (counter == limit) 
+			counter <= 0;
+		else if (reset_n == 1'b1)
+			counter <= counter + 1'b1;
+	end
+	
+	assign pulse = (counter == limit) ? 1 : 0; 
+	
+endmodule
+
 	
 	
 	
