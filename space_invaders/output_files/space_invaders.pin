@@ -84,7 +84,7 @@ VCCIO8                       : A13       : power  :                   : 3.3V    
 GND+                         : A14       :        :                   :         : 8         :                
 GND+                         : A15       :        :                   :         : 7         :                
 VCCIO7                       : A16       : power  :                   : 2.5V    : 7         :                
-VGA_B[9]                     : A17       : output : 2.5 V             :         : 7         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : A17       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : A18       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : A19       :        :                   :         : 7         :                
 VCCIO7                       : A20       : power  :                   : 2.5V    : 7         :                
@@ -333,7 +333,7 @@ GND                          : B13       : gnd    :                   :         
 GND+                         : B14       :        :                   :         : 8         :                
 GND+                         : B15       :        :                   :         : 7         :                
 GND                          : B16       : gnd    :                   :         :           :                
-VGA_B[8]                     : B17       : output : 2.5 V             :         : 7         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : B17       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B18       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B19       :        :                   :         : 7         :                
 GND                          : B20       : gnd    :                   :         :           :                
@@ -359,7 +359,7 @@ VGA_B[2]                     : C11       : output : 3.3-V LVTTL       :         
 VGA_B[5]                     : C12       : output : 3.3-V LVTTL       :         : 8         : Y              
 VGA_VS                       : C13       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : C14       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : C15       :        :                   :         : 7         :                
+VGA_G[9]                     : C15       : output : 2.5 V             :         : 7         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : C16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C17       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C18       :        :                   :         : 7         :                
@@ -387,7 +387,7 @@ VGA_B[6]                     : D11       : output : 3.3-V LVTTL       :         
 VGA_B[7]                     : D12       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : D13       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D14       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : D15       :        :                   :         : 7         :                
+VGA_G[8]                     : D15       : output : 2.5 V             :         : 7         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : D16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D17       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D18       :        :                   :         : 7         :                
@@ -415,7 +415,7 @@ VGA_R[1]                     : E11       : output : 3.3-V LVTTL       :         
 VGA_R[0]                     : E12       : output : 3.3-V LVTTL       :         : 8         : Y              
 VCCIO8                       : E13       : power  :                   : 3.3V    : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : E14       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : E15       :        :                   :         : 7         :                
+VGA_B[8]                     : E15       : output : 2.5 V             :         : 7         : N              
 VCCIO7                       : E16       : power  :                   : 2.5V    : 7         :                
 HEX0[2]                      : E17       : output : 2.5 V             :         : 7         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : E18       :        :                   :         : 7         :                
@@ -443,7 +443,7 @@ VGA_BLANK_N                  : F11       : output : 3.3-V LVTTL       :         
 VGA_R[3]                     : F12       : output : 3.3-V LVTTL       :         : 8         : Y              
 GND                          : F13       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F14       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : F15       :        :                   :         : 7         :                
+VGA_B[9]                     : F15       : output : 2.5 V             :         : 7         : N              
 GND                          : F16       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F17       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F18       :        :                   :         : 7         :                
@@ -472,7 +472,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : G12       :        :                   :      
 VGA_HS                       : G13       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : G14       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : G15       :        :                   :         : 7         :                
-VGA_R[8]                     : G16       : output : 2.5 V             :         : 7         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : G16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : G17       :        :                   :         : 7         :                
 HEX0[0]                      : G18       : output : 2.5 V             :         : 7         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : G19       :        :                   :         : 7         :                
@@ -500,8 +500,8 @@ VGA_G[3]                     : H12       : output : 3.3-V LVTTL       :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : H13       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : H14       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : H15       :        :                   :         : 7         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : H16       :        :                   :         : 7         :                
-VGA_R[9]                     : H17       : output : 2.5 V             :         : 7         : N              
+VGA_R[8]                     : H16       : output : 2.5 V             :         : 7         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : H17       :        :                   :         : 7         :                
 VCCIO7                       : H18       : power  :                   : 2.5V    : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : H19       :        :                   :         : 7         :                
 GNDA2                        : H20       : gnd    :                   :         :           :                
@@ -528,7 +528,7 @@ VGA_R[5]                     : J12       : output : 3.3-V LVTTL       :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : J13       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J14       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J15       :        :                   :         : 7         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : J16       :        :                   :         : 7         :                
+VGA_R[9]                     : J16       : output : 2.5 V             :         : 7         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : J17       :        :                   :         : 7         :                
 GND                          : J18       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J19       :        :                   :         : 7         :                
@@ -575,7 +575,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : L3        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : L4        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : L5        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : L6        :        :                   :         : 1         :                
-VGA_G[9]                     : L7        : output : 2.5 V             :         : 1         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : L7        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : L8        :        :                   :         : 1         :                
 GND                          : L9        : gnd    :                   :         :           :                
 VCCINT                       : L10       : power  :                   : 1.2V    :           :                
@@ -601,7 +601,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : M1        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : M2        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M3        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M4        :        :                   :         : 1         :                
-VGA_G[8]                     : M5        : output : 2.5 V             :         : 1         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : M5        :        :                   :         : 1         :                
 nSTATUS                      : M6        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M7        :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M8        :        :                   :         : 1         :                

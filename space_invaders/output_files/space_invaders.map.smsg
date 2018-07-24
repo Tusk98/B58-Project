@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at space_invaders.v(319): always construct contains both blocking and non-blocking assignments File: /cmshome/leepat25/Desktop/B58-Project/space_invaders/space_invaders.v Line: 319
+Warning (10268): Verilog HDL information at space_invaders.v(200): always construct contains both blocking and non-blocking assignments File: /cmshome/leepat25/Desktop/B58-Project/space_invaders/space_invaders.v Line: 200
